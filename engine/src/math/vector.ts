@@ -79,6 +79,30 @@ export class Vector3 {
         }
         return this;
     }
+
+    static get left() {
+        return new Vector3(-1, 0, 0);
+    }
+
+    static get right() {
+        return new Vector3(1, 0, 0);
+    }
+
+    static get up() {
+        return new Vector3(0, 1, 0);
+    }
+
+    static get down() {
+        return new Vector3(0, -1, 0);
+    }
+
+    static get forward() {
+        return new Vector3(0, 0, -1);
+    }
+
+    static get back() {
+        return new Vector3(0, 0, 1);
+    }
 }
 
 export class Vector2 {
@@ -157,6 +181,22 @@ export class Vector2 {
             this.normalize().mult(max);
         }
         return this;
+    }
+
+    static get left() {
+        return new Vector2(-1, 0);
+    }
+
+    static get right() {
+        return new Vector2(1, 0);
+    }
+
+    static get up() {
+        return new Vector2(0, -1);
+    }
+
+    static get down() {
+        return new Vector2(0, 1);
     }
 }
 
