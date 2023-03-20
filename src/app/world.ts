@@ -47,6 +47,10 @@ export class World {
             this.currentAsteroid++;
         } else {
             this.ship.arrive(this.home, 45, 0);
+
+            if (this.ship.velocity.mag < 0.1 && this.ship.resource === 0) {
+                this.ship.resource = 0;
+            }
         }
 
         this.ship.update(dt);
