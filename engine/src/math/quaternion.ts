@@ -1,7 +1,7 @@
 import { Vector3 } from './vector';
 
 export class Quaternion {
-    constructor(public x = 0, public y = 0, public z = 0, public w = 0) {}
+    constructor(public x = 0, public y = 0, public z = 0, public w = 1) {}
 
     static orientationInDirection(axis: Vector3, angle: number) {
         const sinAngle = Math.sin(angle / 2);
