@@ -20,6 +20,7 @@ export class Quaternion {
         this.x *= -1;
         this.y *= -1;
         this.z *= -1;
+        return this;
     }
 
     static mult(q1: Quaternion, q2: Quaternion | number) {
@@ -47,6 +48,7 @@ export class Quaternion {
             this.z *= q2;
             this.w *= q2;
         }
+        return this;
     }
 
     dot(q: Quaternion) {
