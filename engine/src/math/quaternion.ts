@@ -1,11 +1,15 @@
 import { Vector3 } from './vector';
 
-class Quaternion {
+export class Quaternion {
     constructor(public x = 0, public y = 0, public z = 0, public w = 0) {}
 
     static orientationInDirection(axis: Vector3, angle: number) {
         const sinAngle = Math.sin(angle / 2);
         return new Quaternion(sinAngle * axis.x, sinAngle * axis.y, sinAngle * axis.z, Math.cos(angle / 2));
+    }
+
+    clone() {
+        return new Quaternion(this.x, this.y, this.z, this.w);
     }
 
     conjugate() {
@@ -37,5 +41,50 @@ class Quaternion {
             this.z *= q2;
             this.w *= q2;
         }
+    }
+
+    dot(q: Quaternion) {
+        return this.x * q.x + this.y * q.y + this.z + q.z + this.w * q.w;
+    }
+
+    get length() {
+        return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2 + this.w ** 2);
+    }
+
+    normalize() {
+        let len = this.length;
+        if (len === 0) {
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            this.w = 1;
+        } else {
+            len = 1 / len;
+            this.x *= len;
+            this.y *= len;
+            this.z *= len;
+            this.w *= len;
+        }
+    }
+
+    get angle() {
+        const q = this.clone();
+        if (q.w > 1) q.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalized
+        return 2 * Math.acos(q.w);
+    }
+
+    get axis() {
+        //From: http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToAngle/
+        const q = this.clone();
+        if (q.w > 1) q.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalized
+        const s = Math.sqrt(1 - q.w * q.w); // assuming quaternion normalised then w is less than 1, so term always positive.
+        if (s < 0.001) {
+            // test to avoid divide by zero, s is always positive due to sqrt
+            // if s close to zero then direction of axis not important
+            // if it is important that axis is normalised then replace with x=1; y=z=0;
+            return new Vector3(q.x, q.y, q.z);
+        }
+
+        return new Vector3(q.x / s, q.y / s, q.z / s);
     }
 }
