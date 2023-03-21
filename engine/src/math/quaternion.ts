@@ -12,8 +12,14 @@ export class Quaternion {
         return new Quaternion(this.x, this.y, this.z, this.w);
     }
 
+    static conjugate(q: Quaternion) {
+        return new Quaternion(-q.x, -q.y, -q.z, q.w);
+    }
+
     conjugate() {
-        return new Quaternion(-this.x, -this.y, -this.z, this.w);
+        this.x *= -1;
+        this.y *= -1;
+        this.z *= -1;
     }
 
     static mult(q1: Quaternion, q2: Quaternion | number) {
