@@ -1,4 +1,4 @@
-import { Mesh, Vector3 } from 'merlin';
+import { Mesh, Quaternion, Vector3 } from 'merlin';
 import { Entity } from './entity';
 import { Context } from './types';
 import * as THREE from 'three';
@@ -11,8 +11,8 @@ export class Ship extends Entity {
     resource = 0;
     miningRange = 16;
 
-    constructor(ctx: Context, position = new Vector3(), rotation = new Vector3()) {
-        super(new Mesh(ctx.models.get('spaceship').scene), position, rotation);
+    constructor(ctx: Context, position = new Vector3(), orientation = new Quaternion()) {
+        super(new Mesh(ctx.models.get('spaceship').scene), position, orientation);
         ctx.scene.add(this.mesh.value);
 
         this.maxSpeed = 50;
@@ -23,7 +23,7 @@ export class Ship extends Entity {
         this.acceleration.set(0);
 
         obj.lookAt(new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z));
-        this.rotation.set(obj.rotation.x, obj.rotation.y, obj.rotation.z);
+        this.orientation.set(obj.rotation.x, obj.rotation.y, obj.rotation.z);
     }
 
     render(alpha: number, dt: number) {

@@ -1,4 +1,4 @@
-import { Mesh, Vector3 } from 'merlin';
+import { Mesh, Quaternion, Vector3 } from 'merlin';
 import { Entity } from './entity';
 import { Context } from './types';
 
@@ -8,8 +8,8 @@ export class Station extends Entity {
     upperCentrifugeRotation = 0;
     lowerCentrifugeRotation = 0;
 
-    constructor(ctx: Context, position = new Vector3(), rotation = new Vector3()) {
-        super(new Mesh(ctx.models.get('station').scene), position, rotation);
+    constructor(ctx: Context, position = new Vector3(), orientation = new Quaternion()) {
+        super(new Mesh(ctx.models.get('station').scene), position, orientation);
         ctx.scene.add(this.mesh.value);
     }
 

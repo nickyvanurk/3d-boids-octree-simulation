@@ -1,22 +1,17 @@
 import * as THREE from 'three';
-import { Vector3 } from '../math';
+import { Quaternion, Vector3 } from '../math';
 
 export class Mesh {
     value: THREE.Object3D;
     position = new Vector3();
-    rotation = new Vector3();
+    orientation = new Quaternion();
 
     constructor(mesh: THREE.Object3D) {
         this.value = mesh;
     }
 
     update() {
-        this.value.position.x = this.position.x;
-        this.value.position.y = this.position.y;
-        this.value.position.z = this.position.z;
-
-        this.value.rotation.x = this.rotation.x;
-        this.value.rotation.y = this.rotation.y;
-        this.value.rotation.z = this.rotation.z;
+        this.value.position.set(this.position.x, this.position.y, this.position.z);
+        this.value.quaternion.set(this.orientation.x, this.orientation.y, this.orientation.z, this.orientation.w);
     }
 }

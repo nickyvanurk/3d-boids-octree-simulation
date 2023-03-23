@@ -3,6 +3,21 @@ import { Vector3 } from './vector';
 export class Quaternion {
     constructor(public x = 0, public y = 0, public z = 0, public w = 1) {}
 
+    set(x: Quaternion | number, y?: number, z?: number, w?: number) {
+        if (x instanceof Quaternion) {
+            this.x = x.x;
+            this.y = x.y;
+            this.z = x.z;
+            this.w = x.w;
+        } else {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
+        return this;
+    }
+
     static orientationInDirection(axis: Vector3, angle: number) {
         const sinAngle = Math.sin(angle / 2);
         return new Quaternion(sinAngle * axis.x, sinAngle * axis.y, sinAngle * axis.z, Math.cos(angle / 2));
@@ -10,6 +25,25 @@ export class Quaternion {
 
     clone() {
         return new Quaternion(this.x, this.y, this.z, this.w);
+    }
+
+    static add(q1: Quaternion, q2: Quaternion) {
+        return q1.clone().add(q2.x, q2.y, q2.z, q2.w);
+    }
+
+    add(x: Quaternion | number, y?: number, z?: number, w?: number) {
+        if (x instanceof Quaternion) {
+            this.x += x.x;
+            this.y += x.y;
+            this.z += x.z;
+            this.w += x.w;
+        } else {
+            this.x += x;
+            this.y += y;
+            this.z += z;
+            this.w += w;
+        }
+        return this;
     }
 
     static conjugate(q: Quaternion) {

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Mesh, Vector3 } from 'merlin';
+import { Mesh, Quaternion, Vector3 } from 'merlin';
 import { Entity } from './entity';
 import { Context } from './types';
 import { type MeshBasicMaterial } from 'three';
@@ -9,11 +9,11 @@ export class Asteroid extends Entity {
 
     private material: MeshBasicMaterial;
 
-    constructor(ctx: Context, position = new Vector3(), rotation = new Vector3()) {
+    constructor(ctx: Context, position = new Vector3(), orientation = new Quaternion()) {
         const geometry = new THREE.SphereGeometry(5, 32, 16);
         const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const sphere = new THREE.Mesh(geometry, material);
-        super(new Mesh(sphere), position, rotation);
+        super(new Mesh(sphere), position, orientation);
         ctx.scene.add(this.mesh.value);
         this.material = material;
     }
