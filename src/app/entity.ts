@@ -6,7 +6,7 @@ export class Entity {
     orientation: Quaternion;
     velocity = new Vector3();
     acceleration = new Vector3();
-    angularVelocity = new Quaternion();
+    angularVelocity = new Vector3();
     maxSpeed = 1;
 
     constructor(mesh: Mesh, position = new Vector3(), orientation = new Quaternion()) {
@@ -29,7 +29,7 @@ export class Entity {
 
     render(alpha: number, dt: number) {
         this.mesh.position.set(Vector3.add(this.position, Vector3.mult(this.velocity, dt * alpha)));
-        if (this.velocity.mag > 0 || this.angularVelocity.length > 0) {
+        if (this.velocity.mag > 0 || this.angularVelocity.mag > 0) {
             // this.mesh.orientation.set(
             // Quaternion.add(this.orientation, Quaternion.mult(this.angularVelocity, dt * alpha)),
             // );
