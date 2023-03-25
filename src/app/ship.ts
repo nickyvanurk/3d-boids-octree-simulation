@@ -23,7 +23,7 @@ export class Ship extends Entity {
         this.acceleration.set(0);
 
         obj.lookAt(new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z));
-        this.orientation.set(obj.rotation.x, obj.rotation.y, obj.rotation.z);
+        this.orientation.set(obj.quaternion.x, obj.quaternion.y, obj.quaternion.z, obj.quaternion.w);
     }
 
     render(alpha: number, dt: number) {
