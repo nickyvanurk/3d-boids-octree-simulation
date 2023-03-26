@@ -24,30 +24,26 @@ export class Entity {
         this.velocity.limit(this.maxSpeed);
         this.position.add(Vector3.mult(this.velocity, dt));
 
-        this.orientation.add(
-            new Quaternion(this.angularVelocity.x * dt, this.angularVelocity.y * dt, this.angularVelocity.z * dt, 0)
-                .mult(this.orientation)
-                .mult(0.5),
+        const w = new Quaternion(
+            this.angularVelocity.x * dt,
+            this.angularVelocity.y * dt,
+            this.angularVelocity.z * dt,
+            0,
         );
+        this.orientation.add(w.mult(this.orientation).mult(0.5));
         this.orientation.normalize();
     }
 
     render(alpha: number, dt: number) {
         this.mesh.position.set(Vector3.add(this.position, Vector3.mult(this.velocity, dt * alpha)));
         if (this.velocity.mag > 0 || this.angularVelocity.mag > 0) {
-            this.mesh.orientation.set(this.orientation);
-            //     Quaternion.add(
-            //         this.orientation,
-            //         new Quaternion(
-            //             this.angularVelocity.x * (dt * alpha),
-            //             this.angularVelocity.y * (dt * alpha),
-            //             this.angularVelocity.z * (dt * alpha),
-            //             0,
-            //         )
-            //             .mult(this.orientation)
-            //             .mult(0.5),
-            //     ),
-            // );
+            const w = new Quaternion(
+                this.angularVelocity.x * dt * alpha,
+                this.angularVelocity.y * dt * alpha,
+                this.angularVelocity.z * dt * alpha,
+                0,
+            );
+            this.mesh.orientation.set(Quaternion.add(this.orientation, w.mult(this.orientation).mult(0.5)));
         }
         this.mesh.update();
     }

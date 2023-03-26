@@ -1,10 +1,10 @@
 import { Mesh, Quaternion, Vector3 } from 'merlin';
 import { Entity } from './entity';
 import { Context } from './types';
-import * as THREE from 'three';
+// import * as THREE from 'three';
 import { Asteroid } from './asteroid';
 
-const obj = new THREE.Object3D();
+// const obj = new THREE.Object3D();
 
 export class Ship extends Entity {
     maxForce = 50;
@@ -23,7 +23,7 @@ export class Ship extends Entity {
         super.update(dt);
         this.acceleration.set(0);
 
-        obj.lookAt(new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z));
+        // obj.lookAt(new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z));
         // this.orientation.set(obj.quaternion.x, obj.quaternion.y, obj.quaternion.z, obj.quaternion.w);
     }
 
