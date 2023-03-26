@@ -72,10 +72,15 @@ export class Quaternion {
 
     mult(q2: Quaternion | number) {
         if (q2 instanceof Quaternion) {
-            this.x = this.x * q2.w + this.y * q2.z - this.z * q2.y + this.w * q2.x;
-            this.y = -this.x * q2.z + this.y * q2.w + this.z * q2.x + this.w * q2.y;
-            this.z = this.x * q2.y - this.y * q2.x + this.z * q2.w + this.w * q2.z;
-            this.w = -this.x * q2.x - this.y * q2.y - this.z * q2.z + this.w * q2.w;
+            const tx = this.x;
+            const ty = this.y;
+            const tz = this.z;
+            const tw = this.w;
+
+            this.x = tx * q2.w + ty * q2.z - tz * q2.y + tw * q2.x;
+            this.y = -tx * q2.z + ty * q2.w + tz * q2.x + tw * q2.y;
+            this.z = tx * q2.y - ty * q2.x + tz * q2.w + tw * q2.z;
+            this.w = -tx * q2.x - ty * q2.y - tz * q2.z + tw * q2.w;
         } else {
             this.x *= q2;
             this.y *= q2;
