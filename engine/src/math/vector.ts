@@ -80,6 +80,14 @@ export class Vector3 {
         return this;
     }
 
+    static dot(v1: Vector3, v2: Vector3) {
+        return v1.clone().dot(v2);
+    }
+
+    dot(v: Vector3) {
+        return this.x * v.x + this.y * v.y + this.z * v.z;
+    }
+
     static get left() {
         return new Vector3(-1, 0, 0);
     }
