@@ -16,7 +16,6 @@ export class Ship extends Entity {
         ctx.scene.add(this.mesh.value);
 
         this.maxSpeed = 50;
-        this.angularVelocity.x = 1;
     }
 
     update(dt: number) {
