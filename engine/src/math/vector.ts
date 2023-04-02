@@ -1,3 +1,5 @@
+import { Quaternion } from './quaternion';
+
 export class Vector3 {
     constructor(public x = 0, public y = 0, public z = 0) {}
 
@@ -96,6 +98,31 @@ export class Vector3 {
         this.x = this.y * v.z - this.z * v.y;
         this.y = this.z * v.x - this.x * v.z;
         this.z = this.x * v.y - this.y * v.x;
+        return this;
+    }
+
+    multQ(q: Quaternion) {
+        const x = this.x,
+            y = this.y,
+            z = this.z;
+        const qx = q.x,
+            qy = q.y,
+            qz = q.z,
+            qw = q.w;
+
+        // calculate quat * vector
+
+        const ix = qw * x + qy * z - qz * y;
+        const iy = qw * y + qz * x - qx * z;
+        const iz = qw * z + qx * y - qy * x;
+        const iw = -qx * x - qy * y - qz * z;
+
+        // calculate result * inverse quat
+
+        this.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+        this.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+        this.z = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+
         return this;
     }
 
