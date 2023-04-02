@@ -10,6 +10,7 @@ export class Ship extends Entity {
     maxForce = 50;
     resource = 0;
     miningRange = 16;
+    baseOrientation = new Quaternion();
 
     constructor(ctx: Context, position = new Vector3(), orientation = new Quaternion()) {
         super(new Mesh(ctx.models.get('spaceship').scene), position, orientation);
@@ -22,8 +23,7 @@ export class Ship extends Entity {
         super.update(dt);
         this.acceleration.set(0);
 
-        // obj.lookAt(new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z));
-        // this.orientation.set(obj.quaternion.x, obj.quaternion.y, obj.quaternion.z, obj.quaternion.w);
+        this.calculateOrientation(Vector3.normalize(this.velocity));
     }
 
     render(alpha: number, dt: number) {
@@ -59,5 +59,23 @@ export class Ship extends Entity {
                 this.resource += multiplier;
             }
         }
+    }
+
+    calculateOrientation(v: Vector3) {
+        const forward = new Vector3(0, 0, 1).multQ(this.orientation);
+
+        if (forward.equals(v)) {
+            return this.orientation;
+        } else if (forward.equals(new Vector3(-v.x, -v.y, -v.z))) {
+            return Quaternion.conjugate(this.orientation);
+        }
+
+        const axis = Vector3.cross(forward, v);
+        const angle = Math.asin(axis.mag);
+        axis.normalize();
+
+        const r = Quaternion.orientationInDirection(axis, angle);
+        const target = Quaternion.conjugate(this.baseOrientation).mult(r);
+        this.angularVelocity = target.axis.mult(target.angle * 5); // 0.2s to reach desired angle;
     }
 }
