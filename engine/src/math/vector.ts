@@ -95,9 +95,12 @@ export class Vector3 {
     }
 
     cross(v: Vector3) {
-        this.x = this.y * v.z - this.z * v.y;
-        this.y = this.z * v.x - this.x * v.z;
-        this.z = this.x * v.y - this.y * v.x;
+        const x = this.x,
+            y = this.y,
+            z = this.z;
+        this.x = y * v.z - z * v.y;
+        this.y = z * v.x - x * v.z;
+        this.z = x * v.y - y * v.x;
         return this;
     }
 
