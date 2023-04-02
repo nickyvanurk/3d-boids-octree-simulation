@@ -126,6 +126,10 @@ export class Vector3 {
         return this;
     }
 
+    equals(v: Vector3) {
+        return v.x === this.x && v.y === this.y && v.z === this.z;
+    }
+
     static get left() {
         return new Vector3(-1, 0, 0);
     }
