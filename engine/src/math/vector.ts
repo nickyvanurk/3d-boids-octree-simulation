@@ -88,6 +88,17 @@ export class Vector3 {
         return this.x * v.x + this.y * v.y + this.z * v.z;
     }
 
+    static cross(v1: Vector3, v2: Vector3) {
+        return v1.clone().cross(v2);
+    }
+
+    cross(v: Vector3) {
+        this.x = this.y * v.z - this.z * v.y;
+        this.y = this.z * v.x - this.x * v.z;
+        this.z = this.x * v.y - this.y * v.x;
+        return this;
+    }
+
     static get left() {
         return new Vector3(-1, 0, 0);
     }
