@@ -61,6 +61,14 @@ export class Ship extends Entity {
         }
     }
 
+    deposit(destination: Vector3) {
+        this.arrive(destination, 45, 0);
+
+        if (this.velocity.mag < 0.1 && this.resource > 0) {
+            this.resource = 0;
+        }
+    }
+
     calculateOrientation(v: Vector3) {
         const forward = new Vector3(0, 0, 1).multQ(this.orientation);
 
