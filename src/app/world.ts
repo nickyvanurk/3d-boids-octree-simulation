@@ -7,7 +7,6 @@ import { Vector3 } from '../../engine/src/math/vector';
 import { Environment } from './environment';
 
 export class World {
-    ctx: Context;
     env: Environment;
     station: Station;
     fleet: Fleet;
@@ -18,8 +17,6 @@ export class World {
     home = new Vector3();
 
     constructor(ctx: Context) {
-        this.ctx = ctx;
-
         this.env = new Environment(ctx);
         this.ship = new Ship(ctx, new Vector3(0, 0, 0));
         this.asteroids = [
