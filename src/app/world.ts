@@ -1,14 +1,14 @@
-import * as THREE from 'three';
-import * as utils from './utils';
 import { Fleet } from './fleet';
 import { Station } from './station';
 import { Context } from './types';
 import { Ship } from './ship';
 import { Asteroid } from './asteroid';
 import { Vector3 } from '../../engine/src/math/vector';
+import { Environment } from './environment';
 
 export class World {
     ctx: Context;
+    env: Environment;
     station: Station;
     fleet: Fleet;
     ship: Ship;
@@ -20,17 +20,8 @@ export class World {
     constructor(ctx: Context) {
         this.ctx = ctx;
 
-        ctx.scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.setScalar(1);
-        ctx.scene.add(dirLight);
-
-        const stars = utils.createPointCloudSphere(1000, 6000, 2000, 12.5, 0xffffff, false);
-        ctx.scene.add(stars);
-
+        this.env = new Environment(ctx);
         this.ship = new Ship(ctx, new Vector3(0, 0, 0));
-
         this.asteroids = [
             new Asteroid(ctx, new Vector3(50, 0, 50)),
             new Asteroid(ctx, new Vector3(-50, 0, 50)),
